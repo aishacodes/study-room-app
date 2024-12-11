@@ -1,9 +1,7 @@
-import LoadingScreen from '@/components/organisms/LoadingScreen';
+import HomePage from '@/pages/HomePage';
 
 export default function Home() {
   return (
-    <div>
-      <LoadingScreen />
-    </div>
+    <HomePage />
   );
 }
