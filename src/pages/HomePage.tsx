@@ -13,9 +13,9 @@ const HomePage = () => {
   useEffect(() => {
     const unsubscribe = onSnapshot(studyroomsRef, (snapshot) => {
       if (!snapshot.empty) {
-        const rooms = [] ;
+        const rooms: StudyRoom[] = [] ;
         snapshot.forEach((doc) => {
-          rooms.push({ ...doc.data(), id: doc.id });
+          rooms.push({ ...doc.data(), id: doc.id } as StudyRoom);
         });
         setStudyRooms(rooms);
       }
