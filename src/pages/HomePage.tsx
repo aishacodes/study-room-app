@@ -8,9 +8,9 @@ import React, { useEffect, useState } from 'react';
 
 const HomePage = () => {
   const [studyRooms, setStudyRooms] = useState<StudyRoom[]>([]);
-  const studyroomsRef = collection(db, 'studyrooms');
 
   useEffect(() => {
+    const studyroomsRef = collection(db, 'studyrooms');
     const unsubscribe = onSnapshot(studyroomsRef, (snapshot) => {
       if (!snapshot.empty) {
         const rooms: StudyRoom[] = [] ;
@@ -18,7 +18,10 @@ const HomePage = () => {
           rooms.push({ ...doc.data(), id: doc.id } as StudyRoom);
         });
         setStudyRooms(rooms);
+        return;
       }
+      setStudyRooms([]);
+
     });
 
     return () => unsubscribe();

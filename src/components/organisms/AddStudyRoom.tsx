@@ -14,8 +14,8 @@ const AddStudyRoom = () => {
     e.preventDefault();
     try {
       setLoading(true);
-
       await createStudyRoom(form);
+      setForm({ name: '', location: '', capacity: 0 })
     } catch (err) {
       console.log(err);
     } finally {
