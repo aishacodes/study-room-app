@@ -16,3 +16,5 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 export { db };
+
+export const mapApiKey=  process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY

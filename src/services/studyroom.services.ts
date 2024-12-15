@@ -1,4 +1,5 @@
 import { db } from '@/lib/firebase/clientApp';
+import { StudyRoom } from '@/types';
 import {
   collection,
   addDoc,
@@ -7,13 +8,6 @@ import {
   doc,
   onSnapshot,
 } from 'firebase/firestore';
-
-export interface StudyRoom {
-  id?: string;
-  name: string;
-  location: string;
-  capacity: number;
-}
 
 const COLLECTION_NAME = 'studyrooms';
 
@@ -28,7 +22,6 @@ export const getStudyRooms = () => {
       });
     }
   });
- 
 };
 
 export const createStudyRoom = async (
@@ -46,4 +39,3 @@ export const updateStudyRoom = async (room: StudyRoom): Promise<void> => {
 export const deleteStudyRoom = async (id: string): Promise<void> => {
   await deleteDoc(doc(db, COLLECTION_NAME, id));
 };
-
