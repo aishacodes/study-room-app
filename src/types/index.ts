@@ -19,4 +19,4 @@ export type InputPropType = DetailedHTMLProps<
 export type ButtonPropType = DetailedHTMLProps<
   ButtonHTMLAttributes<HTMLButtonElement>,
   HTMLButtonElement
-> & { children?: ReactNode; variant?: "destructive"|"outline"; error?: string; loading?:boolean };
+> & { children?: ReactNode; variant?: "destructive"|"outline"; error?: string; loading?:boolean;className?:string };

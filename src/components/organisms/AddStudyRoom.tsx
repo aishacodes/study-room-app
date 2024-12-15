@@ -52,7 +52,7 @@ const AddStudyRoom = () => {
         onChange={(e) => updateField('location', e.target.value)}
         placeholder="Location"
       />
-      <Button type="submit" loading={loading}>
+      <Button type="submit" loading={loading} className="mt-4">
         Add Room
       </Button>
     </form>

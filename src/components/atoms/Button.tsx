@@ -1,18 +1,25 @@
 import { ButtonPropType } from '@/types';
 import React from 'react';
 import Spinner from './Spinner';
+import clsx from 'clsx';
 
-const Button = ({ children, loading, variant, ...props }: ButtonPropType) => {
+const Button = ({
+  children,
+  loading,
+  variant,
+  className,
+  ...props
+}: ButtonPropType) => {
   return (
     <button
       {...props}
-      className={`w-32 py-1 font-medium rounded bg-primary text-white flex items-center justify-center gap-2 ${
-        variant == 'destructive' ? 'bg-red-500 text-white' : ''
-      } ${
-        variant == 'outline'
-          ? 'border border-gray-300 bg-white text-gray-600'
-          : ''
-      }`}
+      className={clsx(
+        'w-32 py-1 font-medium rounded bg-primary flex items-center justify-center gap-2',
+        variant !== 'outline' && ' text-white',
+        variant == 'destructive' && 'bg-red-500 ',
+        variant == 'outline' && 'border border-gray-300 bg-white text-gray-600',
+        className
+      )}
     >
       {children}{' '}
       {loading && (
