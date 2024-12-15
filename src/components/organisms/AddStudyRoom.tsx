@@ -24,7 +24,6 @@ const AddStudyRoom = () => {
       )}&key=${mapApiKey}`
     );
     const data = await response.json();
-
     if (data.results.length > 0) {
       const { lat, lng } = data.results[0].geometry.location;
       setForm({ ...form, lat, lng });
