@@ -30,6 +30,7 @@ cp .env.example .env
 - **Language**: TypeScript
 - **Styling**: TailwindCSS
 
+## Live Demo
 
-## Preview
-[Go live](https://study-room-app-xi.vercel.app/)
+Check out the live version of the project here: [Go live](https://study-room-app-xi.vercel.app/)
+
