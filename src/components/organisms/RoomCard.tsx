@@ -1,27 +1,35 @@
 import { StudyRoom } from '@/types';
 import React, { useState } from 'react';
-import Button from '../atoms/Button';
 import DeleteStudyRoom from './DeleteStudyRoom';
 import EditStudyRoom from './EditStudyRoom';
 import Image from 'next/image';
 
-const RoomCard = ({ id, name, location, lat, lng, capacity }: StudyRoom) => {
+const RoomCard = ({
+  id,
+  name,
+  location,
+  lat,
+  lng,
+  capacity,
+  openingHour,
+  closingHour,
+}: StudyRoom) => {
   const [onDelete, setOnDelete] = useState(false);
   const [onEdit, setOnEdit] = useState(false);
 
   return (
-    <div className="w-auto bg-secondary p-4 rounded-lg border border-gray-300 shadow-sm flex flex-col">
+    <div className="flex gap-2 bg-secondary p-4  rounded-lg border border-gray-300 shadow-sm items-start relative">
+      <Image
+        src={'/images/study-room.jpg'}
+        className="w-14 h-14 rounded-full"
+        width={60}
+        height={60}
+        alt=""
+      />
       <div className="flex-grow">
-        <Image
-          src={'/images/study-room.jpg'}
-          className="w-20 h-20 rounded-full"
-          width={100}
-          height={100}
-          alt=""
-        />
-        <h3 className="font-semibold mb-4 text-lg">{name}</h3>
-        <p className="text-sm text-muted-foreground mb-2">
-          Location: {location}
+        <h3 className="font-semibold text-lg mb-2">{name}</h3>
+        <div className="flex justify-between  items-center mb-1">
+          <p className="text-sm text-muted-foreground text-gray-700 ">Location: {location}</p>
           <a
             href={`https://www.google.com/maps?q=${lat},${lng}`}
             target="_blank"
@@ -30,16 +38,33 @@ const RoomCard = ({ id, name, location, lat, lng, capacity }: StudyRoom) => {
           >
             View on Google Maps
           </a>
-        </p>
-        <p className="text-sm">Capacity: {capacity}</p>
+        </div>
+        <div className="flex justify-between text-sm text-gray-500">
+          <p>
+            Opening hour: {openingHour} - {closingHour}
+          </p>
+          <p>{capacity} seat</p>
+        </div>
       </div>
-      <div className="mt-4 flex items-center gap-4">
-        <Button variant="outline" onClick={() => setOnEdit(true)}>
-          Edit
-        </Button>
-        <Button variant="destructive" onClick={() => setOnDelete(true)}>
-          Delete
-        </Button>
+      <div className=" flex items-center gap-2 absolute top-2 right-2">
+        <button onClick={() => setOnEdit(true)}>
+          <Image
+            width={20}
+            height={20}
+            alt=""
+            src="/svgs/edit.svg"
+            className=" cursor-pointer"
+          />
+        </button>
+        <button onClick={() => setOnDelete(true)}>
+          <Image
+            width={20}
+            height={20}
+            alt=""
+            src="/svgs/delete.svg"
+            className=" cursor-pointer"
+          />{' '}
+        </button>
       </div>
       <DeleteStudyRoom
         id={id}
@@ -47,7 +72,16 @@ const RoomCard = ({ id, name, location, lat, lng, capacity }: StudyRoom) => {
         onClose={() => setOnDelete(false)}
       />
       <EditStudyRoom
-        room={{ id, capacity, name, lat, lng, location }}
+        room={{
+          id,
+          capacity,
+          name,
+          lat,
+          lng,
+          location,
+          openingHour,
+          closingHour,
+        }}
         isOpen={onEdit}
         onClose={() => setOnEdit(false)}
       />

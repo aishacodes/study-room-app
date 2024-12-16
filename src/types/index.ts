@@ -12,6 +12,8 @@ export interface StudyRoom {
   lng: number;
   location: string;
   capacity: number;
+  openingHour: string;
+  closingHour: string;
 }
 export type InputPropType = DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,

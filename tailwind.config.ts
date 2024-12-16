@@ -22,6 +22,9 @@ export default {
           '50%': { transform: 'scale(1.1)' },
         },
       },
+      gridTemplateColumns: {
+        autofill: "repeat(auto-fill, minmax(25rem, 1fr))",
+      },
     },
   },
   plugins: [],

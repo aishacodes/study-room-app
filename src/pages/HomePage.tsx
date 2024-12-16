@@ -1,4 +1,5 @@
 'use client';
+import Button from '@/components/atoms/Button';
 import AddStudyRoom from '@/components/organisms/AddStudyRoom';
 import LoadingScreen from '@/components/organisms/LoadingScreen';
 import RoomCard from '@/components/organisms/RoomCard';
@@ -11,6 +12,7 @@ import React, { useEffect, useState } from 'react';
 const HomePage = () => {
   const [studyRooms, setStudyRooms] = useState<StudyRoom[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [addStudyRoom, setAddStudyRoom] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -49,14 +51,22 @@ const HomePage = () => {
         </h1>
       </div>
       <section className=" px-10">
-        <AddStudyRoom />
-        <h1 className="text-2xl font-semibold mt-8 mb-4">Study Rooms</h1>
-        <div className="flex flex-wrap gap-4">
+        <div className="flex justify-between items-center mt-8 mb-4">
+          <h1 className="text-2xl font-semibold ">Study Rooms</h1>
+          <Button onClick={() => setAddStudyRoom(true)}>
+            Add new study room
+          </Button>
+        </div>
+        <div className="grid md:grid-cols-autofill gap-4">
           {studyRooms.map((room, index) => (
             <RoomCard {...room} key={`room-${index}`} />
           ))}
         </div>
       </section>
+      <AddStudyRoom
+        isOpen={addStudyRoom}
+        onClose={() => setAddStudyRoom(false)}
+      />
     </div>
   );
 };

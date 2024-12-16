@@ -14,7 +14,7 @@ const Button = ({
     <button
       {...props}
       className={clsx(
-        'w-32 py-1 font-medium rounded bg-primary flex items-center justify-center gap-2',
+        'min-w-32 px-2 py-1 font-medium rounded bg-primary flex items-center justify-center gap-2',
         variant !== 'outline' && ' text-white',
         variant == 'destructive' && 'bg-red-500 ',
         variant == 'outline' && 'border border-gray-300 bg-white text-gray-600',
