@@ -44,7 +44,7 @@ const AddStudyRoom = ({
     try {
       const coordinates = await fetchCoordinates(form.location);
       await createStudyRoom({ ...form, ...coordinates });
-      alert("Study room added successfully")
+      alert('Study room added successfully');
       setForm(defaultForm);
     } catch (err) {
       handleError(err);
@@ -68,7 +68,8 @@ const AddStudyRoom = ({
           />
           <Input
             label="Capacity"
-            type="number"   min="0"
+            type="number"
+            min="0"
             required
             value={form.capacity}
             onChange={(e) => updateField('capacity', e.target.value)}
@@ -91,13 +92,15 @@ const AddStudyRoom = ({
         </div>
         <Input
           type="text"
-          label="Location" required
+          label="Location"
+          required
           value={form.location}
           onChange={(e) => updateField('location', e.target.value)}
           placeholder="Enter a location"
         />
         <div className="mt-3">
-          <Input required
+          <Input
+            required
             label="Upload room picture"
             type="file"
             accept="image/png,image/jpeg"

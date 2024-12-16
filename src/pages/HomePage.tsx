@@ -2,7 +2,7 @@
 import Button from '@/components/atoms/Button';
 import AddStudyRoom from '@/components/organisms/AddStudyRoom';
 import LoadingScreen from '@/components/organisms/LoadingScreen';
-import RoomCard from '@/components/organisms/RoomCard';
+import RoomList from '@/components/organisms/RoomList';
 import { db } from '@/lib/firebase/clientApp';
 import { StudyRoom } from '@/types';
 import { collection, onSnapshot } from 'firebase/firestore';
@@ -27,9 +27,9 @@ const HomePage = () => {
           rooms.push({ ...doc.data(), id: doc.id } as StudyRoom);
         });
         setStudyRooms(rooms);
-        return;
+      } else {
+        setStudyRooms([]);
       }
-      setStudyRooms([]);
     });
 
     return () => {
@@ -57,11 +57,7 @@ const HomePage = () => {
             Add new study room
           </Button>
         </div>
-        <div className="grid md:grid-cols-autofill gap-4">
-          {studyRooms.map((room, index) => (
-            <RoomCard {...room} key={`room-${index}`} />
-          ))}
-        </div>
+        <RoomList studyRooms={studyRooms} />
       </section>
       <AddStudyRoom
         isOpen={addStudyRoom}
