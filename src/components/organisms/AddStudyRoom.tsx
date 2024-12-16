@@ -21,7 +21,7 @@ const AddStudyRoom = ({
     openingHour: '',
     closingHour: '',
   };
-  const [form, setForm] = useState(defaultForm);
+  const [form, setForm] = useState({ ...defaultForm });
   const [loading, setLoading] = useState(false);
 
   const updateField = (field: string, value: string) =>
@@ -44,6 +44,10 @@ const AddStudyRoom = ({
 
   const handleAddTask = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (form.openingHour >= form.closingHour) {
+      alert('Opening hour must be earlier than closing hour!');
+      return;
+    }
     setLoading(true);
     try {
       const coordinates = await fetchCoordinates();

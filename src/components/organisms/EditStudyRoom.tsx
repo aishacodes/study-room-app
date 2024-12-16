@@ -37,6 +37,10 @@ const EditStudyRoom = ({
   };
   const handleEditTask = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (form.openingHour >= form.closingHour) {
+      alert('Opening hour must be earlier than closing hour!');
+      return;
+    }
     setLoading(true);
     try {
       const coordinates = await fetchCoordinates();
@@ -52,8 +56,8 @@ const EditStudyRoom = ({
   return (
     <Modal title="Edit study room" isOpen={isOpen} onClose={onClose}>
       <form onSubmit={handleEditTask}>
-        <div className="flex gap-2 mb-2">
-          <Input
+      <div className="grid grid-cols-2 gap-2 mb-2">
+      <Input
             label="Name"
             type="text"
             required
@@ -68,6 +72,20 @@ const EditStudyRoom = ({
             value={form.capacity}
             onChange={(e) => updateField('capacity', e.target.value)}
             placeholder="Capacity"
+          />
+           <Input
+            label="Opening hoour"
+            type="time"
+            value={form.openingHour}
+            onChange={(e) => updateField('openingHour', e.target.value)}
+            required
+          />
+          <Input
+            label="Closing hour"
+            type="time"
+            value={form.closingHour}
+            onChange={(e) => updateField('closingHour', e.target.value)}
+            required
           />
         </div>
         <Input
