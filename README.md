@@ -18,18 +18,20 @@ pnpm dev
 # or
 bun dev
 ```
-2. ## Environment Variables
+ ## Environment Variables
 
 To set up the project, create a `.env` file in the root directory based on the `.env.example` file provided. Replace the placeholder values with your own configuration:
 
 ```bash
 cp .env.example .env
 
+```
+
 ## Tech Stack
 - **Framework**: Next.js (React)
 - **Language**: TypeScript
+- **Backend**: Firebase
 - **Styling**: TailwindCSS
-```
 
 ## Live Demo
 
