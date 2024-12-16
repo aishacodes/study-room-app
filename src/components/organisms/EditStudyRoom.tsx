@@ -4,6 +4,7 @@ import { StudyRoom } from '@/types';
 import { updateStudyRoom } from '@/services/studyroom.services';
 import Input from '../atoms/Input';
 import Button from '../atoms/Button';
+import { mapApiKey } from "@/lib/firebase/clientApp";
 
 const EditStudyRoom = ({
   isOpen,
@@ -20,11 +21,26 @@ const EditStudyRoom = ({
   const updateField = (field: string, value: string) =>
     setForm({ ...form, [field]: value });
 
+  const fetchCoordinates = async () => {
+    const response = await fetch(
+      `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+        form.location
+      )}&key=${mapApiKey}`
+    );
+    const data = await response.json();
+    if (data.results.length > 0) {
+      const { lat, lng } = data.results[0].geometry.location;
+      return { lat, lng };
+    } else {
+      alert('Location not found on map!');
+    }
+  };
   const handleEditTask = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
     try {
-      setLoading(true);
-      await updateStudyRoom(form);
+      const coordinates = await fetchCoordinates();
+      await updateStudyRoom({ ...form, ...coordinates });
       onClose();
     } catch (err) {
       alert(err);
