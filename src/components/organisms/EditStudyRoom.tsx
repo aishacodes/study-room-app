@@ -86,7 +86,7 @@ const EditStudyRoom = ({
           placeholder="Location"
         />
          <div className="mt-3">
-          <Input required
+          <Input 
             label="Upload room picture"
             type="file"
             accept="image/png,image/jpeg"
