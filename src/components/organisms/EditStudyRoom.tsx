@@ -1,10 +1,11 @@
 import React, { FormEvent, useState } from 'react';
 import Modal from './Modal';
 import { StudyRoom } from '@/types';
-import { updateStudyRoom } from '@/services/studyroom.services';
+import { fetchCoordinates, updateStudyRoom, uploadFile } from '@/services/studyroom.services';
 import Input from '../atoms/Input';
 import Button from '../atoms/Button';
-import { mapApiKey } from "@/lib/firebase/clientApp";
+import { handleError } from '@/lib/helper';
+import Image from "next/image";
 
 const EditStudyRoom = ({
   isOpen,
@@ -17,24 +18,12 @@ const EditStudyRoom = ({
 }) => {
   const [form, setForm] = useState({ ...room });
   const [loading, setLoading] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
 
   const updateField = (field: string, value: string) =>
     setForm({ ...form, [field]: value });
 
-  const fetchCoordinates = async () => {
-    const response = await fetch(
-      `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-        form.location
-      )}&key=${mapApiKey}`
-    );
-    const data = await response.json();
-    if (data.results.length > 0) {
-      const { lat, lng } = data.results[0].geometry.location;
-      return { lat, lng };
-    } else {
-      alert('Location not found on map!');
-    }
-  };
+ 
   const handleEditTask = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (form.openingHour >= form.closingHour) {
@@ -43,11 +32,11 @@ const EditStudyRoom = ({
     }
     setLoading(true);
     try {
-      const coordinates = await fetchCoordinates();
+      const coordinates = await fetchCoordinates(form.location);
       await updateStudyRoom({ ...form, ...coordinates });
       onClose();
     } catch (err) {
-      alert(err);
+      handleError(err);
     } finally {
       setLoading(false);
     }
@@ -56,8 +45,8 @@ const EditStudyRoom = ({
   return (
     <Modal title="Edit study room" isOpen={isOpen} onClose={onClose}>
       <form onSubmit={handleEditTask}>
-      <div className="grid grid-cols-2 gap-2 mb-2">
-      <Input
+        <div className="grid grid-cols-2 gap-2 mb-2">
+          <Input
             label="Name"
             type="text"
             required
@@ -73,7 +62,7 @@ const EditStudyRoom = ({
             onChange={(e) => updateField('capacity', e.target.value)}
             placeholder="Capacity"
           />
-           <Input
+          <Input
             label="Opening hoour"
             type="time"
             value={form.openingHour}
@@ -96,6 +85,25 @@ const EditStudyRoom = ({
           onChange={(e) => updateField('location', e.target.value)}
           placeholder="Location"
         />
+         <div className="mt-3">
+          <Input required
+            label="Upload room picture"
+            type="file"
+            accept="image/png,image/jpeg"
+            onChange={async (e) => {
+              if (e.target.files?.length) {
+                setUploadingImage(true);
+                const img = await uploadFile(e.target.files[0]);
+                if (img) updateField('image', img);
+                setUploadingImage(false);
+              }
+            }}
+          />
+          {uploadingImage ? 'Uploading...' : ''}
+        </div>
+        {form.image && (
+          <Image src={form.image} width={100} height={100} alt="Uploaded" />
+        )}
         <div className="flex items-center gap-2 mt-8 justify-center">
           <Button variant="outline" onClick={() => onClose()}>
             Cancel

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Modal from './Modal';
 import Button from '../atoms/Button';
 import { deleteStudyRoom } from '@/services/studyroom.services';
+import { handleError } from '@/lib/helper';
 
 const DeleteStudyRoom = ({
   isOpen,
@@ -20,7 +21,7 @@ const DeleteStudyRoom = ({
       await deleteStudyRoom(id);
       onClose();
     } catch (err) {
-      alert(err);
+      handleError(err);
     } finally {
       setLoading(false);
     }

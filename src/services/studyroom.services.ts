@@ -1,5 +1,10 @@
-import { db } from '@/lib/firebase/clientApp';
+import { db, mapApiKey, storage } from '@/lib/firebase/clientApp';
 import { StudyRoom } from '@/types';
+import {
+  getDownloadURL,
+  ref as storageRef,
+  uploadBytes,
+} from 'firebase/storage';
 import {
   collection,
   addDoc,
@@ -8,6 +13,7 @@ import {
   doc,
   onSnapshot,
 } from 'firebase/firestore';
+import { handleError } from '@/lib/helper';
 
 const COLLECTION_NAME = 'studyrooms';
 
@@ -38,4 +44,34 @@ export const updateStudyRoom = async (room: StudyRoom): Promise<void> => {
 
 export const deleteStudyRoom = async (id: string): Promise<void> => {
   await deleteDoc(doc(db, COLLECTION_NAME, id));
+};
+
+export const uploadFile = async (image: File) => {
+  if (image === null) {
+    alert('Please select an image');
+    return null;
+  }
+  const imageRef = storageRef(storage, `images/${image.name}`);
+  try {
+    const snapshot = await uploadBytes(imageRef, image);
+    const url = await getDownloadURL(snapshot.ref);
+    return url;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+export const fetchCoordinates = async (location: string) => {
+  const response = await fetch(
+    `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+      location
+    )}&key=${mapApiKey}`
+  );
+  const data = await response.json();
+  if (data.results.length > 0) {
+    const { lat, lng } = data.results[0].geometry.location;
+    return { lat, lng };
+  } else {
+    alert('Location not found on map!');
+  }
 };

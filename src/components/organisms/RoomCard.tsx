@@ -12,7 +12,7 @@ const RoomCard = ({
   lng,
   capacity,
   openingHour,
-  closingHour,
+  closingHour,image
 }: StudyRoom) => {
   const [onDelete, setOnDelete] = useState(false);
   const [onEdit, setOnEdit] = useState(false);
@@ -20,7 +20,7 @@ const RoomCard = ({
   return (
     <div className="flex gap-2 bg-secondary p-4  rounded-lg border border-gray-300 shadow-sm items-start relative">
       <Image
-        src={'/images/study-room.jpg'}
+        src={image}
         className="w-14 h-14 rounded-full"
         width={60}
         height={60}
@@ -80,7 +80,7 @@ const RoomCard = ({
           lng,
           location,
           openingHour,
-          closingHour,
+          closingHour,image
         }}
         isOpen={onEdit}
         onClose={() => setOnEdit(false)}

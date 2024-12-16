@@ -1,9 +1,14 @@
 import React, { FormEvent, useState } from 'react';
 import Input from '../atoms/Input';
-import { createStudyRoom } from '@/services/studyroom.services';
+import {
+  createStudyRoom,
+  fetchCoordinates,
+  uploadFile,
+} from '@/services/studyroom.services';
 import Button from '../atoms/Button';
-import { mapApiKey } from '@/lib/firebase/clientApp';
 import Modal from './Modal';
+import Image from 'next/image';
+import { handleError } from '@/lib/helper';
 
 const AddStudyRoom = ({
   isOpen,
@@ -20,27 +25,14 @@ const AddStudyRoom = ({
     location: '',
     openingHour: '',
     closingHour: '',
+    image: '',
   };
   const [form, setForm] = useState({ ...defaultForm });
   const [loading, setLoading] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
 
   const updateField = (field: string, value: string) =>
     setForm({ ...form, [field]: value });
-
-  const fetchCoordinates = async () => {
-    const response = await fetch(
-      `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-        form.location
-      )}&key=${mapApiKey}`
-    );
-    const data = await response.json();
-    if (data.results.length > 0) {
-      const { lat, lng } = data.results[0].geometry.location;
-      return { lat, lng };
-    } else {
-      alert('Location not found on map!');
-    }
-  };
 
   const handleAddTask = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -50,11 +42,11 @@ const AddStudyRoom = ({
     }
     setLoading(true);
     try {
-      const coordinates = await fetchCoordinates();
+      const coordinates = await fetchCoordinates(form.location);
       await createStudyRoom({ ...form, ...coordinates });
       setForm(defaultForm);
     } catch (err) {
-      alert(err);
+      handleError(err);
     } finally {
       setLoading(false);
     }
@@ -98,16 +90,39 @@ const AddStudyRoom = ({
         </div>
         <Input
           type="text"
-          label="Location"
+          label="Location" required
           value={form.location}
           onChange={(e) => updateField('location', e.target.value)}
           placeholder="Enter a location"
         />
-        <div className="flex items-center gap-2 mt-8 justify-center">
+        <div className="mt-3">
+          <Input required
+            label="Upload room picture"
+            type="file"
+            accept="image/png,image/jpeg"
+            onChange={async (e) => {
+              if (e.target.files?.length) {
+                setUploadingImage(true);
+                const img = await uploadFile(e.target.files[0]);
+                if (img) updateField('image', img);
+                setUploadingImage(false);
+              }
+            }}
+          />
+          {uploadingImage ? 'Uploading...' : ''}
+        </div>
+        {form.image && (
+          <Image src={form.image} width={100} height={100} alt="Uploaded" />
+        )}
+        <div className="flex items-center gap-2 mt-10 justify-center">
           <Button variant="outline" onClick={() => onClose()}>
             Cancel
           </Button>
-          <Button type="submit" loading={loading}>
+          <Button
+            type="submit"
+            loading={loading}
+            disabled={loading || uploadingImage}
+          >
             Add Room
           </Button>
         </div>

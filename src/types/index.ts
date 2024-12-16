@@ -13,7 +13,7 @@ export interface StudyRoom {
   location: string;
   capacity: number;
   openingHour: string;
-  closingHour: string;
+  closingHour: string;image:string
 }
 export type InputPropType = DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,
