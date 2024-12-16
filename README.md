@@ -29,6 +29,7 @@ cp .env.example .env
 - **Framework**: Next.js (React)
 - **Language**: TypeScript
 - **Styling**: TailwindCSS
+```
 
 ## Live Demo
 
