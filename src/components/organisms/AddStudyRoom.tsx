@@ -26,15 +26,18 @@ const AddStudyRoom = () => {
     const data = await response.json();
     if (data.results.length > 0) {
       const { lat, lng } = data.results[0].geometry.location;
-      setForm({ ...form, lat, lng });
+      return { lat, lng };
     } else {
       alert('Location not found!');
     }
   };
-  const handleAddTask = async () => {
+
+  const handleAddTask = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
     try {
-      setLoading(true);
-      await createStudyRoom({ ...form });
+      const coordinates = await fetchCoordinates();
+      await createStudyRoom({ ...form, ...coordinates });
       setForm({ name: '', lat: 0, lng: 0, location: '', capacity: 0 });
     } catch (err) {
       alert(err);
@@ -44,14 +47,7 @@ const AddStudyRoom = () => {
   };
 
   return (
-    <form
-      onSubmit={async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        await fetchCoordinates();
-        handleAddTask();
-      }}
-      className="w-3/4"
-    >
+    <form onSubmit={handleAddTask} className="w-3/4">
       <h1 className="text-2xl font-semibold mt-8 mb-4">Add New Study Room</h1>
       <div className="flex gap-2 mb-2">
         <Input
