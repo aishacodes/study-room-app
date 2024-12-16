@@ -19,8 +19,8 @@ const DeleteStudyRoom = ({
     try {
       setLoading(true);
       await deleteStudyRoom(id);
-      alert("Study room deleted successfully")
       onClose();
+      alert("Study room deleted successfully")
     } catch (err) {
       handleError(err);
     } finally {

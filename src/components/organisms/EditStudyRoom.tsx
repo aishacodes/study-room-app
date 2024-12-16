@@ -34,8 +34,8 @@ const EditStudyRoom = ({
     try {
       const coordinates = await fetchCoordinates(form.location);
       await updateStudyRoom({ ...form, ...coordinates });
-      alert("Study room edited successfully")
       onClose();
+      alert("Study room edited successfully")
     } catch (err) {
       handleError(err);
     } finally {
