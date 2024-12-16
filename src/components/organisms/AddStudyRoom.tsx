@@ -38,7 +38,7 @@ const AddStudyRoom = ({
       const { lat, lng } = data.results[0].geometry.location;
       return { lat, lng };
     } else {
-      alert('Location not found!');
+      alert('Location not found on map!');
     }
   };
 
@@ -48,7 +48,7 @@ const AddStudyRoom = ({
     try {
       const coordinates = await fetchCoordinates();
       await createStudyRoom({ ...form, ...coordinates });
-      // setForm(defaultForm);
+      setForm(defaultForm);
     } catch (err) {
       alert(err);
     } finally {
