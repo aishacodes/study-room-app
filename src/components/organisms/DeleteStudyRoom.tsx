@@ -15,7 +15,7 @@ const DeleteStudyRoom = ({
 }) => {
   const [loading, setLoading] = useState(false);
 
-  const handleDeleteTask = async () => {
+  const handleDeleteStudyRoom = async () => {
     try {
       setLoading(true);
       await deleteStudyRoom(id);
@@ -38,7 +38,7 @@ const DeleteStudyRoom = ({
           <Button
             variant="destructive"
             loading={loading}
-            onClick={handleDeleteTask}
+            onClick={handleDeleteStudyRoom}
           >
             Yes
           </Button>

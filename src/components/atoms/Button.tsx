@@ -21,7 +21,7 @@ const Button = ({
         className
       )}
     >
-      {children}{' '}
+      {children}
       {loading && (
         <Spinner
           size={16}

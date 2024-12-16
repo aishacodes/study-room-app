@@ -34,7 +34,7 @@ const AddStudyRoom = ({
   const updateField = (field: string, value: string) =>
     setForm({ ...form, [field]: value });
 
-  const handleAddTask = async (e: FormEvent<HTMLFormElement>) => {
+  const handleAddStudyRoom = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (form.openingHour >= form.closingHour) {
       alert('Opening hour must be earlier than closing hour!');
@@ -54,7 +54,7 @@ const AddStudyRoom = ({
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <form onSubmit={handleAddTask}>
+      <form onSubmit={handleAddStudyRoom}>
         <h1 className="text-2xl font-semibold mb-4">Add New Study Room</h1>
         <div className="grid grid-cols-2 gap-2 mb-2">
           <Input
@@ -109,7 +109,7 @@ const AddStudyRoom = ({
               }
             }}
           />
-          {uploadingImage ? 'Uploading...' : ''}
+          {uploadingImage ? 'Uploading image...' : ''}
         </div>
         {form.image && (
           <Image src={form.image} width={100} height={100} alt="Uploaded" />

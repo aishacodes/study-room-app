@@ -24,7 +24,7 @@ const EditStudyRoom = ({
     setForm({ ...form, [field]: value });
 
  
-  const handleEditTask = async (e: FormEvent<HTMLFormElement>) => {
+  const handleEditStudyRoom = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (form.openingHour >= form.closingHour) {
       alert('Opening hour must be earlier than closing hour!');
@@ -44,7 +44,7 @@ const EditStudyRoom = ({
 
   return (
     <Modal title="Edit study room" isOpen={isOpen} onClose={onClose}>
-      <form onSubmit={handleEditTask}>
+      <form onSubmit={handleEditStudyRoom}>
         <div className="grid grid-cols-2 gap-2 mb-2">
           <Input
             label="Name"
