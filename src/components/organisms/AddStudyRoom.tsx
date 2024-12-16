@@ -67,7 +67,7 @@ const AddStudyRoom = ({
           />
           <Input
             label="Capacity"
-            type="number"
+            type="number"   min="0"
             required
             value={form.capacity}
             onChange={(e) => updateField('capacity', e.target.value)}
