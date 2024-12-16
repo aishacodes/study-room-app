@@ -44,6 +44,7 @@ const AddStudyRoom = ({
     try {
       const coordinates = await fetchCoordinates(form.location);
       await createStudyRoom({ ...form, ...coordinates });
+      alert("Study room added successfully")
       setForm(defaultForm);
     } catch (err) {
       handleError(err);
