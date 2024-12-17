@@ -12,7 +12,7 @@ const Input = ({ error, label, ...props }: InputPropType) => {
           <span className="text-gray-400 text-xs italic">(optional)</span>
         )}
       </label>
-      <input
+      <input aria-label={label}
         className="border px-3 py-2 rounded w-full outline-none"
         {...props}
       />

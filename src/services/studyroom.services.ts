@@ -32,9 +32,8 @@ export const getStudyRooms = () => {
 
 export const createStudyRoom = async (
   room: Omit<StudyRoom, 'id'>
-): Promise<string> => {
-  const docRef = await addDoc(studyroomsRef, room);
-  return docRef.id;
+) => {
+ await addDoc(studyroomsRef, room);
 };
 
 export const updateStudyRoom = async (room: StudyRoom): Promise<void> => {

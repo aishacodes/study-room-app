@@ -76,7 +76,7 @@ const AddStudyRoom = ({
             placeholder="Capacity"
           />
           <Input
-            label="Opening hoour"
+            label="Opening hour"
             type="time"
             value={form.openingHour}
             onChange={(e) => updateField('openingHour', e.target.value)}
