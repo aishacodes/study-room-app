@@ -30,14 +30,14 @@ export const getStudyRooms = () => {
   });
 };
 
-export const createStudyRoom = async (
-  room: Omit<StudyRoom, 'id'>
-) => {
- await addDoc(studyroomsRef, room);
+export const createStudyRoom = async (room: Omit<StudyRoom, 'id'>) => {
+  await addDoc(studyroomsRef, room);
 };
 
-export const updateStudyRoom = async (room: StudyRoom): Promise<void> => {
-  const { id, ...updateData } = room;
+export const updateStudyRoom = async (
+  id: string,
+  updateData: Partial<Omit<StudyRoom, 'id'>>
+) => {
   await updateDoc(doc(db, COLLECTION_NAME, id!), updateData);
 };
 

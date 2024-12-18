@@ -1,11 +1,15 @@
 import React, { FormEvent, useState } from 'react';
 import Modal from './Modal';
 import { StudyRoom } from '@/types';
-import { fetchCoordinates, updateStudyRoom, uploadFile } from '@/services/studyroom.services';
+import {
+  fetchCoordinates,
+  updateStudyRoom,
+  uploadFile,
+} from '@/services/studyroom.services';
 import Input from '../atoms/Input';
 import Button from '../atoms/Button';
 import { handleError } from '@/lib/helper';
-import Image from "next/image";
+import Image from 'next/image';
 
 const EditStudyRoom = ({
   isOpen,
@@ -23,7 +27,6 @@ const EditStudyRoom = ({
   const updateField = (field: string, value: string) =>
     setForm({ ...form, [field]: value });
 
- 
   const handleEditStudyRoom = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (form.openingHour >= form.closingHour) {
@@ -33,7 +36,7 @@ const EditStudyRoom = ({
     setLoading(true);
     try {
       const coordinates = await fetchCoordinates(form.location);
-      await updateStudyRoom({ ...form, ...coordinates });
+      await updateStudyRoom(room.id, { ...form, ...coordinates });
       onClose();
     } catch (err) {
       handleError(err);
@@ -56,7 +59,8 @@ const EditStudyRoom = ({
           />
           <Input
             label="Capacity"
-            type="number"  min="0"
+            type="number"
+            min="0"
             required
             value={form.capacity}
             onChange={(e) => updateField('capacity', e.target.value)}
@@ -85,8 +89,8 @@ const EditStudyRoom = ({
           onChange={(e) => updateField('location', e.target.value)}
           placeholder="Location"
         />
-         <div className="mt-3">
-          <Input 
+        <div className="mt-3">
+          <Input
             label="Upload room picture"
             type="file"
             accept="image/png,image/jpeg"

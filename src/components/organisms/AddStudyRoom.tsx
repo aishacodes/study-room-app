@@ -26,6 +26,7 @@ const AddStudyRoom = ({
     openingHour: '',
     closingHour: '',
     image: '',
+    isFavourite:false
   };
   const [form, setForm] = useState({ ...defaultForm });
   const [loading, setLoading] = useState(false);

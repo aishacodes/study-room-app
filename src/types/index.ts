@@ -13,7 +13,9 @@ export interface StudyRoom {
   location: string;
   capacity: number;
   openingHour: string;
-  closingHour: string;image:string
+  closingHour: string;
+  image: string;
+  isFavourite:boolean
 }
 export type InputPropType = DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,

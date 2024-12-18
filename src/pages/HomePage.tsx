@@ -1,6 +1,7 @@
 'use client';
 import Button from '@/components/atoms/Button';
 import AddStudyRoom from '@/components/organisms/AddStudyRoom';
+import FavouriteRooms from "@/components/organisms/FavouriteRooms";
 import LoadingScreen from '@/components/organisms/LoadingScreen';
 import RoomList from '@/components/organisms/RoomList';
 import { db } from '@/lib/firebase/clientApp';
@@ -58,7 +59,9 @@ const HomePage = () => {
           </Button>
         </div>
         <RoomList studyRooms={studyRooms} />
+        <FavouriteRooms/>
       </section>
+
       <AddStudyRoom
         isOpen={addStudyRoom}
         onClose={() => setAddStudyRoom(false)}

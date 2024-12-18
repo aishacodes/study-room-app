@@ -11,7 +11,7 @@ export const mockRooms: StudyRoom[] = [
     lng: -3.8502617,
     location: 'Imzouren',
     name: 'PLEQ office',
-    openingHour: '20:30',
+    openingHour: '20:30',isFavourite:false
   },
   {
     id: '2',
@@ -23,6 +23,6 @@ export const mockRooms: StudyRoom[] = [
     lng: 4.3241628,
     location: 'Imzouren',
     name: 'Block 20',
-    openingHour: '20:30',
+    openingHour: '20:30',isFavourite:false
   },
 ];
