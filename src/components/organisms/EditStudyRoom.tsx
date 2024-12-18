@@ -20,6 +20,7 @@ const EditStudyRoom = ({
   onClose: () => void;
   room: StudyRoom;
 }) => {
+  console.log(room);
   const [form, setForm] = useState({ ...room });
   const [loading, setLoading] = useState(false);
   const [uploadingImage, setUploadingImage] = useState(false);
@@ -36,7 +37,11 @@ const EditStudyRoom = ({
     setLoading(true);
     try {
       const coordinates = await fetchCoordinates(form.location);
-      await updateStudyRoom(room.id, { ...form, ...coordinates });
+      await updateStudyRoom(room.id, {
+        ...form,
+        isFavourite: form.isFavourite,
+        ...coordinates,
+      });
       onClose();
     } catch (err) {
       handleError(err);
